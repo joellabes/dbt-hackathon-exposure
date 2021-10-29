@@ -26,20 +26,23 @@ jobs:
           ref: ${{ github.head_ref }}
           
       - name: create_and_checkout_branch
-        run: git checkout -b feature/auto-exposure2
+        run: git checkout -b feature/auto-exposure
       
       - name: make a new file
         run: python main.py
+          env: 
+            looker_client_id: ${{ secrets.LOOKER_CLIENT_ID }}
+            looker_client_secret: ${{ secrets.LOOKER_CLIENT_SECRET }}
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes
-          branch: feature/auto-exposure2
+          branch: feature/auto-exposure
           
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "feature/auto-exposure2"
+          source_branch: "feature/auto-exposure"
           destination_branch: "main"  
           github_token: ${{ secrets.GITHUB_TOKEN }}
 #       - name: Create Pull Request
