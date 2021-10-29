@@ -25,11 +25,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       
-#       - uses: peterjgrainger/action-create-branch@v2.0.1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           branch: 'auto-exposure'
+      - uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'auto-exposure'
 
       - name: make a new file
         run: echo $(date) > test.txt
@@ -41,9 +41,10 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes
-#           branch: auto-exposure
+          branch: auto-exposure
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
-#         with: 
-#           base: auto-exposure
+        with: 
+          base: main
+          branch: auto-exposure
