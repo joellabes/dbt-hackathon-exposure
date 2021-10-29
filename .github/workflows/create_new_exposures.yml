@@ -26,7 +26,7 @@ jobs:
           ref: ${{ github.head_ref }}
       
       - name: make a new file
-        run: echo date +"%T" > test.txt
+        run: echo $(date) > test.txt
 
 
       # Runs a single command using the runners shell
