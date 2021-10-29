@@ -54,6 +54,11 @@ def bearer_request(url, token=token):
     
     return data
 
+def get_users():
+    users = bearer_request(f'{looker_url}/api/3.1/users')
+    # To work correctly, users must have populated name at first log in, otherwise generates 'None None'
+    return {user['id']: {'name': f"{user['first_name']} {user['last_name']}", 'email': user['email']} for user in users['data'] if not user['verified_looker_employee']}
+
 all_dashboard_data = bearer_request(url=f'{looker_url}/api/3.1/dashboards', token=token)['data']
 
 # return all dashboard ids in a given folder id
@@ -66,7 +71,9 @@ def parse_tables(query_text):
     return [table.split('.')[2] for table in all_tables]
 
 def get_dashboard_exposures(dashboard_list):
+    users = get_users()
     dashboard_exposures = []
+
     for dashboard_id in dashboard_list:
         dashboard = bearer_request(url=f'{looker_url}/api/3.1/dashboards/{dashboard_id}', token=token)
         dashboard_looks = [tile['look']['query_id'] for tile in dashboard['data']['dashboard_elements'] if tile['look'] is not None]
@@ -85,7 +92,7 @@ def get_dashboard_exposures(dashboard_list):
         dashboard_exposure = {
             'dashboard_id' : dashboard_id,
             'dashboard_url' : f'{looker_base_url}/dashboards/{dashboard_id}',
-            'created_by' : dashboard['data']['user_id'],
+            'created_by' : users[dashboard['data']['user_id']],
             'query_ids' : query_ids,
             'dashboard_tables' : dashboard_tables,
             'title' : dashboard['data']['title']
@@ -108,8 +115,8 @@ def get_exposure_yml(dashboard_obj):
                     "url": dashboard_obj['dashboard_url'],
                     "depends_on": model_refs,
                     "owner": {
-                        "name": "",
-                        "email": dashboard_obj['created_by']
+                        "name": dashboard_obj['created_by']['name'] if dashboard_obj['created_by']['name'] != 'None None' else '',
+                        "email": dashboard_obj['created_by']['email']
                     }
                 }
             ]
