@@ -29,7 +29,7 @@ jobs:
         run: git checkout -b feature/auto-exposure2
           
       - name: make a new file
-        run: echo $(date) > test.txt
+        run: echo $(date) > test1.txt
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
