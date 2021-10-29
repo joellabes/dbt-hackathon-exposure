@@ -30,9 +30,9 @@ jobs:
       
       - name: make a new file
         run: python main.py
-          env: 
-            looker_client_id: ${{ secrets.LOOKER_CLIENT_ID }}
-            looker_client_secret: ${{ secrets.LOOKER_CLIENT_SECRET }}
+        env: 
+          looker_client_id: ${{ secrets.LOOKER_CLIENT_ID }}
+          looker_client_secret: ${{ secrets.LOOKER_CLIENT_SECRET }}
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
