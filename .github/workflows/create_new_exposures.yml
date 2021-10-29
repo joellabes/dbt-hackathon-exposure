@@ -29,10 +29,11 @@ jobs:
         run: git checkout -b feature/auto-exposure
       
       - name: make a new file
-        env: 
-          LOOKER_CLIENT_ID: ${{ secrets.LOOKER_CLIENT_ID }}
-          LOOKER_CLIENT_SECRET: ${{ secrets.LOOKER_CLIENT_SECRET }}
-        run: python main.py
+#         env: 
+#           LOOKER_CLIENT_ID: ${{ secrets.LOOKER_CLIENT_ID }}
+#           LOOKER_CLIENT_SECRET: ${{ secrets.LOOKER_CLIENT_SECRET }}
+#         run: python main.py
+        run: echo $(date) > test.txt
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
