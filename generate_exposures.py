@@ -35,11 +35,7 @@ def get_token(url, body):
     data = json.loads(response.read().decode('utf-8'))
     return data['access_token']
 
-
-
 token = get_token(url=f'{looker_url}/api/3.1/login', body=looker_api_login_body)
-
-
 
 # GET request with bearer auth
 def bearer_request(url, token=token):
@@ -58,24 +54,16 @@ def bearer_request(url, token=token):
     
     return data
 
-
-
 all_dashboard_data = bearer_request(url=f'{looker_url}/api/3.1/dashboards', token=token)['data']
-
-
 
 # return all dashboard ids in a given folder id
 def get_dashboards_in_folder(folder_id, all_dashboard_data=all_dashboard_data):
     return [dash_data['id'] for dash_data in all_dashboard_data if dash_data['folder']['id'] == folder_id]
 
-
-
 def parse_tables(query_text):
     all_tables = re.findall("(?:from|join)\s+([\w\d]+\.[\w\d]+\.[\w\d]+)", query_text.lower())
     
     return [table.split('.')[2] for table in all_tables]
-
-
 
 def get_dashboard_exposures(dashboard_list):
     dashboard_exposures = []
@@ -108,10 +96,6 @@ def get_dashboard_exposures(dashboard_list):
     return dashboard_exposures
 
 
-
-pro_serv_dash_exposures = get_dashboard_exposures(get_dashboards_in_folder(13))
-
-
 def get_exposure_yml(dashboard_obj):
     model_refs = [f"ref('{table_name}')" for table_name in dashboard_obj['dashboard_tables']]
     exposure = {
@@ -133,11 +117,11 @@ def get_exposure_yml(dashboard_obj):
         }
     return exposure
 
-
-
 def write_exposure_yaml(dashboard_obj_list):
     for dashboard in dashboard_obj_list:
-        filename = dashboard['title'].lower().replace(' ','_') + f"_looker_{dashboard['dashboard_id']}" 
+        filename = dashboard['title'].lower().replace(' ','_') + f"_looker_{dashboard['dashboard_id']}"
+        if 'yaml_files' not in os.listdir():
+            os.mkdir('yaml_files') 
         with open(f"yaml_files/{filename}.yaml", 'w') as target:
             yaml.dump(get_exposure_yml(dashboard), target, sort_keys=False)
 

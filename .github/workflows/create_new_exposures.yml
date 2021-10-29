@@ -24,20 +24,25 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      
+          
       - name: create_and_checkout_branch
         run: git checkout -b feature/auto-exposure2
-          
+      
       - name: make a new file
-        run: echo $(date) > test1.txt
+        run: python main.py
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes
           branch: feature/auto-exposure2
-      
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with: 
-          base: main
-          branch: feature/auto-exposure2
+          
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "feature/auto-exposure2"
+          destination_branch: "main"  
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Create Pull Request
+#         uses: peter-evans/create-pull-request@v3
+#         with: 
+#           base: auto-exposure
