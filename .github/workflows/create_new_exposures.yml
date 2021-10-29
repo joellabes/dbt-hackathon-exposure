@@ -25,9 +25,14 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       
+      - uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'auto-exposure'
+
       - name: make a new file
         run: echo $(date) > test.txt
-
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
