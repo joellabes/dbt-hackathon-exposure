@@ -36,3 +36,9 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes
+          branch: auto-exposure
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with: 
+          base: auto-exposure
