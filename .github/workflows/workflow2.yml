@@ -31,10 +31,10 @@ jobs:
       - name: make a new file
         run: echo $(date) > test.txt
 
-#       - uses: stefanzweifel/git-auto-commit-action@v4
-#         with:
-#           commit_message: Commit changes
-#           branch: feature/auto-exposure2
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Commit changes
+          branch: feature/auto-exposure2
           
       - name: pull-request
         uses: repo-sync/pull-request@v2
