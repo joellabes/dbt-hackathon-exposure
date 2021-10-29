@@ -41,7 +41,7 @@ jobs:
         with:
           source_branch: "feature/auto-exposure2"
           destination_branch: "master"  
-      
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 #       - name: Create Pull Request
 #         uses: peter-evans/create-pull-request@v3
 #         with: 
