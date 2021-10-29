@@ -39,7 +39,7 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "main"
+          destination_branch: "feature/auto-exposure2"
           github_token: ${{ secrets.GITHUB_TOKEN }}
       
 #       - name: Create Pull Request
