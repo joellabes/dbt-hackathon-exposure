@@ -29,7 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: 'auto-exposure'
+          branch: 'auto-exposure2'
 
       - name: make a new file
         run: echo $(date) > test.txt
@@ -41,10 +41,10 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes
-          branch: auto-exposure
+          branch: auto-exposure2
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with: 
           base: main
-          branch: auto-exposure
+          branch: auto-exposure2
