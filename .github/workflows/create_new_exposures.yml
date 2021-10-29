@@ -29,10 +29,10 @@ jobs:
         run: git checkout -b feature/auto-exposure
       
       - name: make a new file
-        run: python main.py
         env: 
           looker_client_id: ${{ secrets.LOOKER_CLIENT_ID }}
           looker_client_secret: ${{ secrets.LOOKER_CLIENT_SECRET }}
+        run: python main.py
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
